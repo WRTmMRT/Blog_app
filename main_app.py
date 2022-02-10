@@ -1,15 +1,16 @@
-from flask import Flask
-from numpy import true_divide
+from pydoc import render_doc
+from flask import Flask, render_template
 
 app = Flask(__name__)
 
 @app.route("/")
-def hello_world():
-    return "<h1>home</h1>"
+@app.route("/home")
+def home():
+    return render_template('home.html')
 
 @app.route("/about")
 def about():
-    return "<h6>about</h6>"
+    return render_template('about.html')
 
 
 if __name__ == '__main__' :
