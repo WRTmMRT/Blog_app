@@ -27,16 +27,16 @@ posts = [
     }
 ]
 
-
-@app.route("/")
-@app.route("/home")
+#Routes to pages
+@app.route("/") #Route to main page
+@app.route("/home") #Route to home page
 def home():
     return render_template('home.html', posts=posts)
 
-@app.route("/about")
+@app.route("/about") #Route to about page
 def about():
-    return render_template('about.html')
+    return render_template('about.html', title='About')
 
-
+#Allows main app to run the web server
 if __name__ == '__main__' :
     app.run(debug=True)
