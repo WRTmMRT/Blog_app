@@ -1,5 +1,5 @@
 from pydoc import render_doc
-from flask import Flask, render_template
+from flask import Flask, render_template, url_for
 app = Flask(__name__)
 
 
@@ -14,15 +14,15 @@ posts = [
     
     {
         'author':'Xx_Tru3G0m3r_xX',
-        'title': 'Help!! Urg3nt G3M3R in NEED!!!',
-        'content': "Im super horny and I can't stop jacking the alpha gamer male joystick!! please help me GamerGuys!! ",
+        'title': 'post',
+        'content': "second post content",
         'date_posted': 'Febuary 4, 2022'
     },
     
     {
         'author':'the_lemmon101',
-        'title': 'To @Xx_Tru3G0m3r_xX',
-        'content': 'bro wtf, hella cringe',
+        'title': 'post',
+        'content': 'third post content',
         'date_posted': 'Febuary 4, 2022'
     }
 ]
