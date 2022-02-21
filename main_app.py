@@ -43,13 +43,13 @@ def about():
 @app.route("/register") #Route to registration page
 def register():
     form = RegistrationForm()
-    return render_template('register.html', title='Register' form=form)
+    return render_template('register.html', title='Register', form=form)
 
 
 @app.route("/login") #Route to login page
 def login():
     form = LoginForm()
-    return render_template('login.html', title='Login' form=form)
+    return render_template('login.html', title='Login', form=form)
 
 #Allows main app to run the web server
 if __name__ == '__main__' :
