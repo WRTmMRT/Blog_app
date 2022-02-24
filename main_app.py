@@ -1,5 +1,5 @@
 from pydoc import render_doc
-from flask import Flask, render_template, url_for
+from flask import Flask, flash, redirect, render_template, url_for
 from forms import RegistrationForm, LoginForm
 app = Flask(__name__)
 
@@ -40,9 +40,13 @@ def about():
     return render_template('about.html', title='About')
 
 
-@app.route("/register") #Route to registration page
+@app.route("/register", methods=['GET', 'POST']) #Route to registration page
 def register():
     form = RegistrationForm()
+    #Check if form is valid
+    if form.validate_on_submit():
+        flash(f'Account made for {form.username.data}', 'success')
+        return redirect(url_for('home'))
     return render_template('register.html', title='Register', form=form)
 
 
