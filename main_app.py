@@ -9,6 +9,12 @@ app.config['SECRET_KEY'] = '16f147ed7bc9d2e0b8af5e0f59ba0ca1'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 db = SQLAlchemy(app)
 
+class User(db.Model):
+    id = db.Column(db.Interger, primary_key=True)
+    username = db.Column(db.String(20), unique=True, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    image_file = db.Column(db.string(20), nullable=False)
+
 posts = [
     
     {
