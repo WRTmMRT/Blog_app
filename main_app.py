@@ -1,9 +1,13 @@
 from pydoc import render_doc
 from flask import Flask, flash, redirect, render_template, url_for
 from forms import RegistrationForm, LoginForm
-app = Flask(__name__)
+from flask_sqlalchemy import SQLAlchemy
 
+
+app = Flask(__name__)
 app.config['SECRET_KEY'] = '16f147ed7bc9d2e0b8af5e0f59ba0ca1'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+db = SQLAlchemy(app)
 
 posts = [
     
