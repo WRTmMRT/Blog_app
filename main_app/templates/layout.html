@@ -11,9 +11,9 @@
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
         
         {% if title %}
-            <title>Flask blog - {{ title }}</title>
+            <title class="message">Flask blog - {{ title }}</title>
         {% else %}
-            <title>Flask blog</title>
+            <title class="message">Flask blog</title>
         {% endif %} 
     </head>
     
@@ -43,9 +43,14 @@
 
         
         <main role="main" class="container">
+            {% if title %}
+                <p class="message">Flask blog - {{ title }}</p>
+            {% else %}
+                <p class="message">Flask blog</p>
+            {% endif %} 
             <div class="row">
                 <div class="col-md-8">
-                    {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %} {%for category, message in messages%} <div class="alert alert-{{ category }} message"> {{ message }} </div> {%endfor%} {% endif %} {% endwith %}    
+                    {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %} {%for category, message in messages%} <div class="alert alert-{{ category }}"> {{ message }} </div> {%endfor%} {% endif %} {% endwith %}    
                     {% block content %}{% endblock %}
                 </div>
                 <div class="col-md-4">
