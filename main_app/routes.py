@@ -1,3 +1,5 @@
+import os
+import secrets
 from flask import flash, redirect, render_template, url_for, request
 from main_app import app, db, bcrypt
 from main_app.forms import RegistrationForm, LoginForm, UpdateAccountForm
@@ -73,17 +75,31 @@ def login():
             flash(f'Login unsuccessful, Please check your email and password', 'danger')
     return render_template('login.html', title='Login', form=form)
 
+
+
 @app.route("/logout") #Route to log out
 def logout():
     logout_user()
     return redirect(url_for('home'))
 
 
+def save_picture(form_picture):
+    random_hex = secrets.token_hex(8)
+    _, f_ext = os.path.splitext(form_picture.filename)
+    picture_fn = random_hex + f_ext
+    picture_path = os.path.join(app.root_path, 'static/profile_pics', picture_fn)
+    form_picture.save(picture_path)
+    
+    return picture_fn
+
 @app.route("/account", methods=['GET', 'POST'])
 @login_required
 def account():
     form = UpdateAccountForm()
     if form.validate_on_submit():
+        if form.picture.data:
+            picture_file = save_picture(form.picture.data)
+            current_user.image_file = picture_file  
         current_user.username = form.username.data
         current_user.email = form.email.data
         db.session.commit()
