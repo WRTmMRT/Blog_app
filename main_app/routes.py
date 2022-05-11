@@ -1,7 +1,7 @@
 import os
 import secrets
 from PIL import Image
-from flask import flash, redirect, render_template, url_for, request
+from flask import flash, redirect, render_template, url_for, request, abort
 from main_app import app, db, bcrypt
 from main_app.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm
 from main_app.models import User, Post
@@ -74,6 +74,7 @@ def save_picture(form_picture):
     i.save(picture_path)
     return picture_fn
 
+# Route to account
 @app.route("/account", methods=['GET', 'POST'])
 @login_required
 def account():
@@ -93,7 +94,7 @@ def account():
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
     return render_template('account.html', title='Account', image_file=image_file, form=form)
 
-
+# Route for new posts
 @app.route("/post/new", methods=['GET', 'POST'])
 @login_required
 def new_post():
@@ -104,5 +105,22 @@ def new_post():
         db.session.commit()
         flash('Your post has been created!', 'success')
         return redirect(url_for('home'))
-    return render_template('create_post.html', title='New Post',
-                           form=form, legend='New Post')
+    return render_template('create_post.html', title='New Post', form=form, legend='New Post')
+
+
+# Route for individual posts
+@app.route("/post/<int:post_id>")
+def post(post_id):
+    post = Post.query.get_or_404(post_id)
+    return render_template('post.html', title=post.title, post=post)
+
+
+# Route for update/delete posts
+@app.route("/post/<int:post_id>/update")
+@login_required
+def update_post(post_id):
+    post = Post.query.get_or_404(post_id)
+    if post.author != current_user:
+        abort(403)
+    form = PostForm()
+    return render_template('create_post.html', title='Update Post', form=form, legend='New Post')
