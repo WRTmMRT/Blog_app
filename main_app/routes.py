@@ -3,7 +3,7 @@ import secrets
 from PIL import Image
 from flask import flash, redirect, render_template, url_for, request, abort
 from main_app import app, db, bcrypt
-from main_app.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm
+from main_app.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm, RequestResetForm, ResetPasswordForm
 from main_app.models import User, Post
 from flask_login import login_user, current_user, logout_user, login_required
 
@@ -146,3 +146,24 @@ def delete_post(post_id):
     db.session.commit()
     flash('Your post has been deleted!', 'success')
     return redirect(url_for('home'))
+
+
+
+@app.route("/reset_password", methods=['GET', 'POST']) #Route to reset password request
+def reset_request():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+    form = RequestResetForm()
+    return render_template('reset_request.html', title='Reset Password', form=form)
+
+
+@app.route("/reset_password/<token>", methods=['GET', 'POST'])
+def reset_token(token):
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+    user = User.verify_reset_token(token)
+    if user is None:
+        flash('That is an invaild or expired token', 'warning')
+        return redirect(url_for('reset_request'))
+    form = ResetPasswordForm()
+    return render_template('reset_token.html', title='Reset Password', form=form)
