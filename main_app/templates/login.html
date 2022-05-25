@@ -38,7 +38,7 @@
                     {{ form.remember(class="form-check-input") }}
                     {{ form.remember.label(class="form-check-label") }}
                     <small class="text-muted ml-2">
-                        <a href="#" class="text-decoration-none"> Forgot password?</a>   
+                        <a href="{{ url_for('reset_request') }}" class="text-decoration-none"> Forgot password?</a>   
                     </small>
                 </div>
             </fieldset>
