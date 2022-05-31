@@ -12,11 +12,11 @@ bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login' 
 login_manager.login_message_category = 'info'
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_SERVER'] = 'mail.glasse.co.nz'
 app.config['MAIL_PORT'] = 587
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = 'wkminecraft20@gmail.com'
-app.config['MAIL_PASSWORD'] = 'dszexwytllqqczhq'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USERNAME'] = 'reset@glasse.co.nz'
+app.config['MAIL_PASSWORD'] = 'SanctaDTG22!@'
 mail = Mail(app)
 
 from main_app import routes
